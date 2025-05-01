@@ -23,7 +23,9 @@ async function connectWallet() {
 async function lend() {
   try {
     const amount = ethers.parseEther("0.01");
-    const tx = await contract.offerLoan({ value: amount });
+    const interest = ethers.parseEther("0.001");
+    const tx = await contract.offerLoan(interest, { value: amount });
+
     await tx.wait();
     alert("Lending successful!");
   } catch (err) {
@@ -34,8 +36,20 @@ async function lend() {
 
 async function repay() {
   try {
-    const tx = await contract.repayLoan();
-    await tx.wait();
+    const txOffer = await contract.offerLoan(interest, { value: amount });
+    const receipt = await txOffer.wait();
+    const loanOfferedEvent = receipt.logs.find(
+      (log) => log.fragment.name === "LoanOffered"
+    );
+    const loanId = loanOfferedEvent.args.loanId;
+
+    const loan = await contract.getLoan(loanId);
+    const repaymentAmount = loan.amount + loan.interest;
+    const txRepay = await contract.repayLoan(loanId, {
+      value: repaymentAmount,
+    });
+
+    await txRepay.wait();
     alert("Repayment successful!");
   } catch (err) {
     console.error(err);
