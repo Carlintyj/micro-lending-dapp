@@ -1,7 +1,7 @@
 let signer;
 let contract;
 
-const CONTRACT_ADDRESS = "0xE1846dD8aE1Fe167e576a50d43213C90BB3B2999"; // replace me
+const CONTRACT_ADDRESS = "0xE1846dD8aE1Fe167e576a50d43213C90BB3B2999";
 
 async function connectWallet() {
   if (!window.ethereum) {
@@ -15,15 +15,15 @@ async function connectWallet() {
   document.getElementById("userAddress").innerText = await signer.getAddress();
   document.getElementById("app").style.display = "block";
 
-  const abi = (await fetch("abi.json")).json();
-  abi.then((data) => {
-    contract = new ethers.Contract(CONTRACT_ADDRESS, data.abi, signer);
-  });
+  const response = await fetch("abi.json");
+  const data = await response.json();
+  contract = new ethers.Contract(CONTRACT_ADDRESS, data.abi, signer);
 }
 
 async function lend() {
   try {
-    const tx = await contract.offerLoan({ value: ethers.parseEther("0.01") });
+    const amount = ethers.parseEther("0.01");
+    const tx = await contract.offerLoan({ value: amount });
     await tx.wait();
     alert("Lending successful!");
   } catch (err) {
