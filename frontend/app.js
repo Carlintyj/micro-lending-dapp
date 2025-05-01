@@ -36,20 +36,31 @@ async function lend() {
 
 async function repay() {
   try {
-    const txOffer = await contract.offerLoan(interest, { value: amount });
-    const receipt = await txOffer.wait();
-    const loanOfferedEvent = receipt.logs.find(
-      (log) => log.fragment.name === "LoanOffered"
-    );
-    const loanId = loanOfferedEvent.args.loanId;
+    const userAddress = await signer.getAddress();
+    const loanCount = await contract.getLoanCount();
+    let loanId = null;
+
+    for (let i = 0; i < loanCount; i++) {
+      const loan = await contract.getLoan(i);
+      if (
+        loan.borrower.toLowerCase() === userAddress.toLowerCase() &&
+        !loan.isRepaid
+      ) {
+        loanId = i;
+        break;
+      }
+    }
+
+    if (loanId === null) {
+      alert("No active loan found for this borrower.");
+      return;
+    }
 
     const loan = await contract.getLoan(loanId);
-    const repaymentAmount = loan.amount + loan.interest;
-    const txRepay = await contract.repayLoan(loanId, {
-      value: repaymentAmount,
-    });
+    const totalRepayment = loan.amount + loan.interest;
 
-    await txRepay.wait();
+    const tx = await contract.repayLoan(loanId, { value: totalRepayment });
+    await tx.wait();
     alert("Repayment successful!");
   } catch (err) {
     console.error(err);
