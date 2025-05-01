@@ -23,7 +23,7 @@ async function connectWallet() {
 
 async function lend() {
   try {
-    const tx = await contract.lend({ value: ethers.parseEther("0.01") });
+    const tx = await contract.offerLoan({ value: ethers.parseEther("0.01") });
     await tx.wait();
     alert("Lending successful!");
   } catch (err) {
