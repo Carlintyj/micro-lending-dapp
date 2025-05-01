@@ -1,7 +1,7 @@
 let signer;
 let contract;
 
-const CONTRACT_ADDRESS = "0xYourDeployedContractAddressHere"; // replace me
+const CONTRACT_ADDRESS = "0xE1846dD8aE1Fe167e576a50d43213C90BB3B2999"; // replace me
 
 async function connectWallet() {
   if (!window.ethereum) {
