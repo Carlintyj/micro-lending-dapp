@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Micro Lending DApp</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.min.js"></script>
+  </head>
+  <body>
+    <h1>Micro Lending DApp</h1>
+
+    <button id="connectBtn">Connect Wallet</button>
+
+    <div id="app" style="display: none">
+      <p>Your address: <span id="userAddress"></span></p>
+      <button onclick="lend()">Lend 0.01 ETH</button>
+      <button onclick="repay()">Repay Loan</button>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
