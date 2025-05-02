@@ -3,8 +3,8 @@ async function main() {
   console.log("Deploying with:", deployer.address);
   const LoanContract = await ethers.getContractFactory("LoanContract");
   const contract = await LoanContract.deploy();
-  await contract.waitForDeployment();
-  console.log(`Deployed to: ${contract.address}`);
+  const deployment = await contract.waitForDeployment(); // Wait for deployment to be confirmed
+  console.log(`Deployed to: ${await deployment.getAddress()}`); // Get the address from the deployment object
 }
 main().catch((error) => {
   console.error(error);

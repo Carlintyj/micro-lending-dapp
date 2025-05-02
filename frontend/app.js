@@ -1,7 +1,7 @@
 let signer;
 let contract;
 
-const CONTRACT_ADDRESS = "0xE1846dD8aE1Fe167e576a50d43213C90BB3B2999";
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 async function connectWallet() {
   if (!window.ethereum) {
