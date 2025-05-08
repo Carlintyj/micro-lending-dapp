@@ -578,7 +578,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!val || isNaN(val) || val <= 0) return alert("Invalid duration");
 
     try {
-      const seconds = val * 86400;
+      const seconds = val * 60;
       await lotteryContract.methods
         .setLotteryDuration(seconds)
         .send({ from: accounts[0] });
