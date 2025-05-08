@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       type: "function",
     },
   ];
-  const contractAddress = "0x9a2a85c972370e5326e3c6b4848df10362f2263e";
+  const contractAddress = "0xe56A84F6C3748f195e11ace0c704b3bEd104b96D";
 
   let web3;
   let lotteryContract;
